@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["hirainchen@gmail.com"]
 
   spec.summary       = %q{simple image helpers for the rails project using react}
-  spec.description   = %q{make easily just like using the <img> tag}
+  spec.description   = %q{simple image helpers for the rails project using react, make it easily just like using the <img> tag}
   spec.homepage      = "https://github.com/rainchen/react-rails-img"
   spec.license       = "MIT"
 
