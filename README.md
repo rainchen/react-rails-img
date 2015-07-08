@@ -44,7 +44,10 @@ just similar to rails helper `image_tag`
 2. with props: e.g.: `imageTag('path/logo.png', {alt: 'logo', className: 'logo', id: 'logo', width: 100, height: 50})`
 
 
- 
+### helper for getting image path
+
+e.g.: `Img.assetPath('placeholder/logo.png')`
+
 ## Acknowledgements
 
 the image path will respect `Rails.env`, for development it will be sth like
