@@ -1,0 +1,88 @@
+<%
+images = {}
+prefix = Rails.application.config.assets.prefix
+should_compute_assets_path = Rails.env.production? # for performance
+if should_compute_assets_path
+  images_dir = Rails.root.join('app/assets/images/').to_s
+  assets.each_file do |file_path|
+    if file_path.starts_with?(images_dir)
+      file_name = file_path.sub(images_dir, '')
+      file_path =
+                  if Rails.application.config.assets.digest
+                    File.join('/', prefix, Rails.application.assets[file_name].digest_path)
+                  else
+                    File.join('/', prefix, file_name)
+                  end
+      images[file_name] = file_path
+    end
+  end
+end
+%>
+// usage: <Img className="tip" src="/assets/ui-tip.png" alt="private event tip" />
+// using cssSprite: <Img src="/assets/css_sprite/where-b.png" /> =>
+//   <img class="where-b" data-reactid=".0.1.$0.3.0.1.0">, where-b.png should be placed in `assets/images/css_sprite`
+var Img = React.createClass({
+  statics: {
+    // usage: Img.assetPath('logo.png') => "/assets/logo.png"
+    assetPath: function (path) {
+      var paths = <%= images.to_json %>;
+      return paths[path] || "/assets/"+path;
+    }
+  },
+
+  propTypes: {
+    src: React.PropTypes.string
+  },
+
+  src: function(){
+    var src = this.props.src;
+    if(src.match("/assets/")){
+      src = src.replace("/assets/", '');
+    }
+    src = Img.assetPath(src);
+    return src;
+  },
+
+  isUsingCssSprite: function (src) {
+    return src.match(/css_sprite/);
+  },
+
+  useCssSprite: function (src, className) {
+    // "/assets/ui-right-w.png" => "ui-right-w"
+    var baseName = src.replace(/\/assets\/(.*)\..*$/, '$1');
+    var cssSpriteClassName = baseName.replace(/css_sprite\//, '');
+    if(className){
+      className = cssSpriteClassName + " "+className;
+    }else{
+      className = cssSpriteClassName;
+    }
+     src = Img.assetPath('css_sprite_holder.png');
+    //src = null; // disable the src
+    return {src: src, className: className};
+  },
+
+  render: function() {
+    var className = this.props.className;
+    var src = this.src();
+    // using css_sprite
+    if(this.isUsingCssSprite(src)){
+      // src should be url like "/assets/css_sprite/xxx.png"
+      var result = this.useCssSprite(this.props.src, className);
+      src = result.src;
+      className = result.className;
+    }
+    return <img src={src} id={this.props.id} alt={this.props.alt} className={className} size={this.props.size} width={this.props.width} height={this.props.height} />;
+  }
+});
+
+
+// similar to rails helper `image_tag`, e.g.: {imageTag('placeholder/active-01.png')}
+// the function will return for development:
+// /assets/placeholder/active-01.png
+// and for production
+// /assets/placeholder/active-01-be1f67ffd42a4c1a41bdcc547c5705a3423a2f24bfe930f00398077fe518e6c0.png
+function imageTag (source, options) {
+  if(!options)options = {};
+  var src = "/assets/"+source;
+  return <Img src={src} id={options.id} alt={options.alt} className={options.className} size={options.size} width={options.width} height={options.height} />;
+}
