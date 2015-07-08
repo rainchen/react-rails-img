@@ -1,12 +1,10 @@
-# React::Rails::Img
+# react-rails-img
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/react/rails/img`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Simple image helpers for the rails project using react, make it easily just like using the `<img>` tag.
 
 ## Installation
 
-Add this line to your application's Gemfile:
+1. Add this line to your application's Gemfile:
 
 ```ruby
 gem 'react-rails-img'
@@ -16,19 +14,47 @@ And then execute:
 
     $ bundle
 
-Or install it yourself as:
+2. Require the javascript file in `app/assets/javascripts/application.js`:
 
-    $ gem install react-rails-img
+  ```js
+  //= require react_rails_img
+  ```
 
 ## Usage
 
-TODO: Write usage instructions here
+### React Component Style
 
-## Development
+the asset adds a `<Img>` component
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `bin/console` for an interactive prompt that will allow you to experiment.
+1. base usage: e.g.: `<Img src="/assets/logo.png" />`
+2. with props: e.g.: `<Img src="/assets/logo.png" alt="logo" className="logo" id="logo" width=100 height=50 />`
+3. advance usage - using cssSprite: e.g.: `<Img src="/assets/css_sprite/logo.png" />`
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release` to create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+    1) this feature requires gem 'css_sprite'
+
+    2) css_sprite images should be placed in dir `assets/images/css_sprite/`
+
+    3) put the string `css_sprite` after `/assets/` in the path
+
+### JS funtion Style
+
+just similar to rails helper `image_tag`
+
+1. base usage: e.g.: `imageTag('logo.png')`
+2. with props: e.g.: `imageTag('path/logo.png', {alt: 'logo', className: 'logo', id: 'logo', width: 100, height: 50})`
+
+
+ 
+## Acknowledgements
+
+the image path will respect `Rails.env`, for development it will be sth like
+
+  `/assets/logo.png`
+ 
+and for production, it will be contains the timestamp as
+ 
+   `/assets/logo-be1f67ffd42a4c1a41bdcc547c5705a3423a2f24bfe930f00398077fe518e6c0.png`
+
 
 ## Contributing
 
