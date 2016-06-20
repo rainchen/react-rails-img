@@ -4,15 +4,11 @@ prefix = Rails.application.config.assets.prefix
 should_compute_assets_path = Rails.env.production? # for performance
 if should_compute_assets_path
   images_dir = Rails.root.join('app/assets/images/').to_s
-  assets.each_file do |file_path|
-    if file_path.starts_with?(images_dir)
-      file_name = file_path.sub(images_dir, '')
-      file_path =
-                  if Rails.application.config.assets.digest
-                    File.join('/', prefix, Rails.application.assets[file_name].digest_path)
-                  else
-                    File.join('/', prefix, file_name)
-                  end
+  images_enumerator = defined?(assets) ? assets.each_file : Dir["#{images_dir}**/*.*"]
+  images_enumerator.each do |file_path|
+    if file_path.to_s.starts_with?(images_dir)
+      file_name = File.basename file_path
+      file_path = asset_path(file_name)
       images[file_name] = file_path
     end
   end
