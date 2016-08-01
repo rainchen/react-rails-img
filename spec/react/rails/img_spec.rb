@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe React::Rails::Img do
   it 'has a version number' do
