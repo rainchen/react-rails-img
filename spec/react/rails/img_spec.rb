@@ -1,11 +1,17 @@
 require 'rails_helper'
 
-describe React::Rails::Img do
-  it 'has a version number' do
-    expect(React::Rails::Img::VERSION).not_to be nil
-  end
+describe React::Rails::Img, type: :request do
+  it 'should be works with asset pipline' do
+    get '/assets/application.js'
+    expect(response).to be_success
 
-  it 'does something useful' do
-    expect(false).to eq(true)
+    # enable to load by Sprockets
+    expect(response.body).not_to match "Sprockets::FileNotFound"
+
+    # no syntax error
+    expect(response.body).not_to match "ExecJS::RuntimeError: SyntaxError"
+
+    # got the correct content
+    expect(response.body).to match "var Img = React.createClass"
   end
 end
