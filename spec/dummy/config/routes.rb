@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
 
-  # mount DummyApp::Engine => "/dummy_app"
+  get 'posts/show'
+
 end
