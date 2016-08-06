@@ -28,4 +28,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rails", "~> 4.2.7"
   spec.add_development_dependency "sqlite3"
   spec.add_development_dependency "rspec-rails", "~> 3.5"
+  spec.add_development_dependency "capybara-webkit"
+  spec.add_development_dependency "selenium-webdriver"
+  spec.add_development_dependency "launchy"
 end
