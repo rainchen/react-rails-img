@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe React::Rails::Img, type: :request do
-  it 'should be works with asset pipline' do
+  it 'should be working with asset pipline' do
     get '/assets/application.js'
     expect(response).to be_success
 
