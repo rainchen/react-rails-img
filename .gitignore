@@ -7,3 +7,8 @@
 /pkg/
 /spec/reports/
 /tmp/
+.DS_Store
+log/
+/spec/dummy/tmp/
+.byebug_history
+.ruby-version
