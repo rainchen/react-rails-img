@@ -31,4 +31,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "capybara-webkit"
   spec.add_development_dependency "selenium-webdriver"
   spec.add_development_dependency "launchy"
+  spec.add_development_dependency "byebug"
 end
