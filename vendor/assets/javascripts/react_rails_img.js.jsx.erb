@@ -8,7 +8,7 @@ if should_compute_assets_path
   images_enumerator = defined?(assets) ? assets.each_file : Dir["#{images_dir}**/*.*"]
   images_enumerator.each do |file_path|
     if file_path.to_s.starts_with?(images_dir)
-      relative_path = file_path.relative_path_from(images_path)
+      relative_path = Pathname.new(file_path).relative_path_from(Pathname.new(images_path)).to_s
       file_path = asset_path(relative_path)
       images[relative_path] = file_path
     end
