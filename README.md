@@ -2,6 +2,8 @@
 
 Simple image helpers for the rails project using react, make it easily just like using the `<img>` tag.
 
+[![Build Status](https://travis-ci.org/rainchen/react-rails-img.svg?branch=master)](https://travis-ci.org/rainchen/react-rails-img)
+
 ## Installation
 
 1. Add this line to your application's Gemfile:
