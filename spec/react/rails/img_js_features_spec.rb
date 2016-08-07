@@ -18,6 +18,7 @@ describe 'js features', type: :feature, js: true do
   # https://github.com/thoughtbot/capybara-webkit/wiki/Installing-Qt-and-compiling-capybara-webkit
   # http://stackoverflow.com/questions/17075380/can-i-use-homebrews-qt5-with-capybara-webkit
   it "react_ujs is working" do
+    expect_no_js_errors
     expect(page).to have_content 'Title: Demo for gem react-rails-img'
   end
 
