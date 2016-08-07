@@ -1,3 +1,21 @@
 language: ruby
 rvm:
-  - 2.2.2
+  - 2.3.1
+env:
+  global:
+    # - JAVASCRIPT_DRIVER=webkit_debug
+
+# to get capybara-webkit work with qt5
+# refs:
+# - http://stackoverflow.com/questions/37201085/unable-to-locate-package-libqt5webkit5-dev
+# - https://docs.travis-ci.com/user/trusty-ci-environment#tl%3Bdr---Using-Trusty
+sudo: required
+dist: trusty
+addons:
+  apt:
+    sources:
+      - ubuntu-sdk-team
+    packages:
+      - libqt5webkit5-dev
+      - qtdeclarative5-dev
+script: xvfb-run bundle exec rake
