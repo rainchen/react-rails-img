@@ -6,6 +6,20 @@ Rails.application.configure do
   # your test database is "scratch space" for the test suite and is wiped
   # and recreated between test runs. Don't rely on the data there!
   config.cache_classes = true
+  # config.cache_classes = false # set cache_classes to false to disable Sprockets caching assets so that `Sprockets.register_dependency_resolver 'rails-env'` can be called for each asset
+  # prevent sprockets from caching assets in test env when cache_classes is set to true
+  sprockets_env = nil
+  config.assets.configure do |env|
+    sprockets_env = env # Sprockets::Environment
+    # Use memory store for assets cache in test env to avoid caching to tmp/assets
+    env.cache = ActiveSupport::Cache.lookup_store(:memory_store)
+  end
+  # reset `Rails.application.assets` which was set by sprockets-rails using `env = env.cached; app.assets = self.build_environment(app, true)`
+  # in sprockets-rails-3.1.1/lib/sprockets/railtie.rb
+  config.after_initialize do
+    # Rails.application.assets is Sprockets::CachedEnvironment
+    Rails.application.assets = sprockets_env
+  end
 
   # Do not eager load code on boot. This avoids loading your whole application
   # just for the purpose of running a single test. If you are using a tool that
