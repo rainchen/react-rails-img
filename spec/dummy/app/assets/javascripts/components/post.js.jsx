@@ -7,8 +7,17 @@ var Post = React.createClass({
     publishedBy: React.PropTypes.node
   },
 
+  getInitialState: function(){
+    return {clicked: false};
+  },
+
+  handleClick: function(){
+    this.setState({clicked: true});
+  },
+
   render: function() {
     var railsLogo = "rails-logo.svg";
+    var reactjsLogo = "logo/reactjs-logo.svg";
     return (
       <div>
         <div>Title: {this.props.title}</div>
@@ -19,6 +28,8 @@ var Post = React.createClass({
         <div>rails logo(50): <img src={Img.assetPath(railsLogo)} width="50"/></div>
         <div>rails logo(25): {imageTag(railsLogo, {width: 25})}</div>
         <div>reactjs logo: <Img src="/assets/logo/reactjs-logo.svg" className="logo" /></div>
+        <div>custom props with component: <Img id="img-custom-props" src="/assets/logo/reactjs-logo.svg" className="logo" alt={reactjsLogo} onClick={this.handleClick} data-foo="bar" data-clicked={this.state.clicked} /></div>
+        <div>custom props with helper: {imageTag("logo/reactjs-logo.svg", {id:"img-custom-props-helper", className:"logo", alt:reactjsLogo, onClick:this.handleClick, "data-foo":"bar", "data-clicked":this.state.clicked})}</div>
       </div>
     );
   }
