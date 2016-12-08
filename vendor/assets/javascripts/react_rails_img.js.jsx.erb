@@ -68,7 +68,11 @@ var Img = React.createClass({
       src = result.src;
       className = result.className;
     }
-    return <img src={src} id={this.props.id} alt={this.props.alt} className={className} size={this.props.size} width={this.props.width} height={this.props.height} />;
+    var props = {src: src};
+    if(className){
+      props.className = className;
+    }
+    return <img {...this.props} {...props} />;
   }
 });
 
@@ -81,5 +85,5 @@ var Img = React.createClass({
 function imageTag (source, options) {
   if(!options)options = {};
   var src = "/assets/"+source;
-  return <Img src={src} id={options.id} alt={options.alt} className={options.className} size={options.size} width={options.width} height={options.height} />;
+  return <Img {...options} src={src} />;
 }

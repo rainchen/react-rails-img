@@ -56,4 +56,18 @@ describe 'js features', type: :feature, js: true do
       expect(page).to have_selector 'img[width="100"][src="/assets/rails-logo-e6d7efc676da55da20de9da9e4d231a44542d457e0191a3a1074a945bb194363.svg"]'
     end
   end
+
+  it "allow to use custom props with component <Img>" do
+    expect(page).to have_content 'custom props with component:'
+    expect(page).to have_selector 'img[id="img-custom-props"][class="logo"][src="/assets/logo/reactjs-logo.svg"][alt="logo/reactjs-logo.svg"][data-foo="bar"][data-clicked="false"]'
+    page.find_by_id('img-custom-props').trigger(:click)
+    expect(page).to have_selector 'img[id="img-custom-props"][class="logo"][src="/assets/logo/reactjs-logo.svg"][alt="logo/reactjs-logo.svg"][data-foo="bar"][data-clicked="true"]'
+  end
+
+  it "allow to use custom props with imageTag()" do
+    expect(page).to have_content 'custom props with helper:'
+    expect(page).to have_selector 'img[id="img-custom-props-helper"][class="logo"][src="/assets/logo/reactjs-logo.svg"][alt="logo/reactjs-logo.svg"][data-foo="bar"][data-clicked="false"]'
+    page.find_by_id('img-custom-props-helper').trigger(:click)
+    expect(page).to have_selector 'img[id="img-custom-props-helper"][class="logo"][src="/assets/logo/reactjs-logo.svg"][alt="logo/reactjs-logo.svg"][data-foo="bar"][data-clicked="true"]'
+  end
 end
